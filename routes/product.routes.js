@@ -6,9 +6,7 @@ import { createProduct, getProducts } from "../controllers/product.controller.js
 const productRouter = Router();
 
 
-productRouter.post("/product" ,upload.single('img'), createProduct)
-// notasRouter.get("/allNotas", getNotas)
-// notasRouter.get("/post/:id", getNotasById)
+productRouter.post("/product" ,upload.single('product[img]'), createProduct)
 productRouter.get("/product", getProducts)
 
 
