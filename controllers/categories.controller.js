@@ -43,13 +43,13 @@ export const getCategories = async(req,res) => {
 
 export const createSize = async(req,res) => {
 
-    const  {size} = req.body;
+    const  {size, productId} = req.body;
     try {
-
         
         const result = await prisma.talle.create({
             data:{
-                size:size
+                size:size,
+                productId: productId
             }
         })
 

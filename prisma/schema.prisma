@@ -33,10 +33,11 @@ model Product {
   name        String
   price       String
   img String?
+  stock Int
   createdAt   DateTime     @default(now())
   categories  Categories[] @relation("ProductCategories")
   productCategories ProductCategories[]
-  talle Talle[]
+  talles ProductoTalle[]
 }
 
 model Categories {
@@ -49,8 +50,18 @@ model Categories {
 model Talle {
   id        Int      @id @default(autoincrement())
   size      String   
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
+  product   ProductoTalle[]
+}
+
+model ProductoTalle {
+  id          Int      @id @default(autoincrement())
+  productoId  Int
+  talleId     Int
+  stock       Int  
+  Product    Product  @relation(fields: [productoId], references: [id])
+  Talle       Talle     @relation(fields: [talleId], references: [id])
+
+  @@unique([productoId, talleId]) 
 }
 
 model ProductCategories {
@@ -61,3 +72,4 @@ model ProductCategories {
 
   @@id([productId, categoryId])
 }
+
