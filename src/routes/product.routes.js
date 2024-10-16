@@ -8,7 +8,7 @@ const productRouter = Router();
 
 productRouter.post("/product" ,upload.single('product[img]'), createProduct)
 productRouter.get("/product", getProducts)
-
+productRouter.get("/product/:id", getProducts)
 
 
 export default productRouter;

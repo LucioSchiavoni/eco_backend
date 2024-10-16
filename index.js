@@ -1,9 +1,9 @@
 import express from 'express'
 import cors from 'cors'
-import userRouter from './routes/user.routes.js'
+import userRouter from './src/routes/user.routes.js'
 import dotenv from 'dotenv'
-import categoriesRouter from './routes/categories.routes.js'
-import productRouter from './routes/product.routes.js'
+import categoriesRouter from './src/routes/categories.routes.js'
+import productRouter from './src/routes/product.routes.js'
 
 
 dotenv.config()
@@ -22,7 +22,7 @@ const opcionesCors = {
 app.use(cors(opcionesCors))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use("/upload", express.static("/middlewares/upload"))
+app.use("/upload", express.static("src/middlewares/upload"))
 app.use("/", userRouter)
 app.use("/", categoriesRouter)
 app.use("/", productRouter)

@@ -70,3 +70,26 @@ export const getProducts = async (req, res) => {
     return res.status(500).json({ error: 'Error al obtener los productos' });
   }
 }
+
+
+export const getProductById = async (req, res) => { 
+  const { id } = req.params;
+  try {
+    const product = await prisma.product.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        productCategories: true,
+        talles: true,
+      },
+    });
+    if (!product) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+    return res.status(200).json(product);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error al obtener el producto' });
+  }
+}
