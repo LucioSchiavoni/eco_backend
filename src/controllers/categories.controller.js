@@ -31,6 +31,49 @@ export const createCategories = async(req,res) => {
     }
 }
 
+
+export const getSubCategories = async(req,res) => { 
+    const {categoryId} = req.body
+    try {
+        const result = await prisma.subCategories.findMany({
+            where:{
+                categoryId:categoryId
+            }
+        })
+        
+        return res.json(result)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const createSubCategories = async(req,res) => {
+    const {name, categoryId} = req.body
+    try {
+        const exist = await prisma.subCategories.findFirst({
+            where:{
+                name: name
+            }
+        })
+        if(exist){
+            const message = { message: "Esta subcategoria ya existe"}
+            return res.json(message)
+        }
+        const result = await prisma.subCategories.create({
+            data:{
+                name: name,
+                categoryId: categoryId
+            }
+        })
+        const message = {success: "Se agrego una nueva subcategoria"}
+        return res.json(message)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
 export const getCategories = async(req,res) => {
     try {
         const result = await prisma.categories.findMany()

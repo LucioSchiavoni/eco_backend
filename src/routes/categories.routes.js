@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCategories, getCategories, createSize } from "../controllers/categories.controller.js";
+import { createCategories, getCategories, createSize, createSubCategories, getSubCategories } from "../controllers/categories.controller.js";
 
 
 
@@ -9,5 +9,9 @@ const categoriesRouter = Router();
 categoriesRouter.post("/newCategories" , createCategories)
 categoriesRouter.get("/categories" , getCategories)
 categoriesRouter.post("/size", createSize)
+categoriesRouter.post("/subCategories", createSubCategories)
+categoriesRouter.get("/subCategories", getSubCategories)
+categoriesRouter.get("/categories", getCategories)
+
 
 export default categoriesRouter;

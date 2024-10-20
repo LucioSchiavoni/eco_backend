@@ -45,6 +45,14 @@ model Categories {
   name           String
   products       Product[]     @relation("ProductCategories")
   productCategories ProductCategories[]
+  subCategories  SubCategories[]
+}
+
+model SubCategories {
+  id          Int          @id @default(autoincrement())
+  categoryId  Int
+  name        String
+  categories  Categories @relation(fields: [categoryId], references: [id])
 }
 
 model Talle {
