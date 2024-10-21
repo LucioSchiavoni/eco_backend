@@ -6,12 +6,12 @@ dotenv.config()
 
 export const registerService = async (req,res) => {
     
-    const {username, password, rol, name, email} = req.body;
+    const { password, rol, name, email} = req.body;
 
     try {
         const exist = await prisma.user.findFirst({
             where: {
-                username: username
+                email: email
             }
         })
         if(exist){
@@ -21,7 +21,6 @@ export const registerService = async (req,res) => {
         const hashPassword =  bcrypt.hashSync(password, salt)
         const newUser =  await prisma.user.create({
             data:{
-                username: username,
                 name: name,
                 email:email,
                 password: hashPassword,
