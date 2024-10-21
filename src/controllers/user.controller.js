@@ -28,7 +28,7 @@ export const registerService = async (req,res) => {
                 rolUser: rol
             }
         })
-        res.json({success: "Usuario creado con exito"})
+        return res.json({success: "Usuario creado con exito"})
         
     } catch (error) {
         console.log("Error del registro: ", error)

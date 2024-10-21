@@ -52,7 +52,7 @@ model SubCategories {
   id          Int          @id @default(autoincrement())
   categoryId  Int
   name        String
-  categories  Categories @relation(fields: [categoryId], references: [id])
+  categories  Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model Talle {

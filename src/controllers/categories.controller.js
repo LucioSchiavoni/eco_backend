@@ -33,11 +33,11 @@ export const createCategories = async(req,res) => {
 
 
 export const getSubCategories = async(req,res) => { 
-    const {categoryId} = req.body
+    const {categoryId} = req.params;
     try {
         const result = await prisma.subCategories.findMany({
             where:{
-                categoryId:categoryId
+                categoryId: parseInt(categoryId)
             }
         })
         
