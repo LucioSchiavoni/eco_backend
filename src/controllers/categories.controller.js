@@ -9,7 +9,7 @@ export const createCategories = async(req,res) => {
 
     const {name} = req.body;
     try {
-        const exist = await prisma.categories.findFirst({
+        const exist = await prisma.category.findFirst({
             where:{
                 name: name
             }
@@ -19,7 +19,7 @@ export const createCategories = async(req,res) => {
         return res.json(message)
         }
 
-        const result = await prisma.categories.create({
+        const result = await prisma.category.create({
             data:{
                 name: name
             }
@@ -35,7 +35,7 @@ export const createCategories = async(req,res) => {
 export const getSubCategories = async(req,res) => { 
     const {categoryId} = req.params;
     try {
-        const result = await prisma.subCategories.findMany({
+        const result = await prisma.subCategory.findMany({
             where:{
                 categoryId: parseInt(categoryId)
             }
@@ -50,7 +50,7 @@ export const getSubCategories = async(req,res) => {
 export const createSubCategories = async(req,res) => {
     const {name, categoryId} = req.body
     try {
-        const exist = await prisma.subCategories.findFirst({
+        const exist = await prisma.subCategory.findFirst({
             where:{
                 name: name
             }
@@ -59,7 +59,7 @@ export const createSubCategories = async(req,res) => {
             const message = { message: "Esta subcategoria ya existe"}
             return res.json(message)
         }
-        const result = await prisma.subCategories.create({
+        const result = await prisma.subCategory.create({
             data:{
                 name: name,
                 categoryId: categoryId
@@ -76,7 +76,7 @@ export const createSubCategories = async(req,res) => {
 
 export const getCategories = async(req,res) => {
     try {
-        const result = await prisma.categories.findMany()
+        const result = await prisma.category.findMany()
         return res.json(result)
     } catch (error) {
         console.log(error)

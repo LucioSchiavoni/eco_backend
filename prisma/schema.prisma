@@ -29,39 +29,29 @@ enum RolUser {
 }
 
 model Product {
-  id                Int              @id @default(autoincrement())
-  name              String
-  price             String
-  img               String?
-  stock             Int
-  createdAt         DateTime         @default(now())
-  categories        Categories[]     @relation("ProductCategories")
-  productCategories ProductCategories[]
-  subCategories     SubCategories[]  @relation("ProductSubCategories") 
-}
-
-
-model Categories {
   id             Int          @id @default(autoincrement())
   name           String
-  products       Product[]     @relation("ProductCategories")
-  productCategories ProductCategories[]
-  subCategories  SubCategories[]
+  price          String
+  img            String?
+  stock          Int
+  createdAt      DateTime     @default(now())
+  category       Category     @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  subCategory    SubCategory  @relation(fields: [subCategoryId], references: [id])
+  subCategoryId  Int
 }
 
-model SubCategories {
-  id                Int              @id @default(autoincrement())
-  categoryId        Int
-  name              String
-  categories        Categories       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  products          Product[]        @relation("ProductSubCategories") 
+model Category {
+  id            Int           @id @default(autoincrement())
+  name          String
+  subCategories SubCategory[] 
+  products      Product[]
 }
 
-model ProductCategories {
-  productId    Int
-  categoryId   Int
-  product      Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  category     Categories   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-
-  @@id([productId, categoryId])
+model SubCategory {
+  id          Int       @id @default(autoincrement())
+  name        String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  products    Product[]
 }
