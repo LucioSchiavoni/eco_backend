@@ -29,16 +29,17 @@ enum RolUser {
 }
 
 model Product {
-  id          Int          @id @default(autoincrement())
-  name        String
-  price       String
-  img String?
-  stock Int
-  createdAt   DateTime     @default(now())
-  categories  Categories[] @relation("ProductCategories")
+  id                Int              @id @default(autoincrement())
+  name              String
+  price             String
+  img               String?
+  stock             Int
+  createdAt         DateTime         @default(now())
+  categories        Categories[]     @relation("ProductCategories")
   productCategories ProductCategories[]
-  talles ProductoTalle[]
+  subCategories     SubCategories[]  @relation("ProductSubCategories") 
 }
+
 
 model Categories {
   id             Int          @id @default(autoincrement())
@@ -49,35 +50,18 @@ model Categories {
 }
 
 model SubCategories {
-  id          Int          @id @default(autoincrement())
-  categoryId  Int
-  name        String
-  categories  Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-}
-
-model Talle {
-  id        Int      @id @default(autoincrement())
-  size      String   
-  product   ProductoTalle[]
-}
-
-model ProductoTalle {
-  id          Int      @id @default(autoincrement())
-  productoId  Int
-  talleId     Int
-  stock       Int  
-  Product    Product  @relation(fields: [productoId], references: [id], onDelete: Cascade)
-  Talle       Talle     @relation(fields: [talleId], references: [id], onDelete: Cascade)
-
-  @@unique([productoId, talleId]) 
+  id                Int              @id @default(autoincrement())
+  categoryId        Int
+  name              String
+  categories        Categories       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  products          Product[]        @relation("ProductSubCategories") 
 }
 
 model ProductCategories {
   productId    Int
   categoryId   Int
-  product      Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
-  category     Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  product      Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category     Categories   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@id([productId, categoryId])
 }
-

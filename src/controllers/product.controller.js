@@ -11,22 +11,27 @@ export const createProduct = async (req, res) => {
     const file = req.file;
     const uploadFile = file ? `${process.env.URL_UPLOAD}/upload/${file.filename}` : ''; 
   try {
+  
     const newProduct = await prisma.product.create({
       data: {
         name: name,
         price: price,
         stock: parseInt(stock),
         img: file ? uploadFile : null,
-        categories:{
-          create: {
-            name: category,
-            subCategories: {
-              create: {
-                name: subCategory,
-              },
-            },
+        productCategories:{
+          create:{
+            categories:{
+              connect:{
+                id: parseInt(category)
+              }
+          }
+        },
+          subCategories:{
+          connect:{
+            id: parseInt(subCategory)
         }
       }
+    }
     }
     });
 
