@@ -11,7 +11,7 @@ categoriesRouter.get("/categories" , getCategories)
 categoriesRouter.post("/size", createSize)
 categoriesRouter.post("/subCategories", createSubCategories)
 categoriesRouter.get("/subCategories/:categoryId", getSubCategories)
-categoriesRouter.get("/categories", getCategories)
+
 
 
 export default categoriesRouter;
