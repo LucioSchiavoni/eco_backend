@@ -64,3 +64,27 @@ export const getProductById = async (req, res) => {
     return res.status(500).json({ error: 'Error al obtener el producto' });
   }
 }
+
+
+export const getProductBySubCategory = async (req, res) => { 
+  const { id } = req.params;
+  try {
+    const product = await prisma.product.findMany({
+      where: {
+        subCategoryId: parseInt(id),
+      },
+      include:{
+        category:true,
+        subCategory:true,
+      }
+    });
+    if (!product) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+    return res.status(200).json(product);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error al obtener el producto' });
+  }
+
+}
